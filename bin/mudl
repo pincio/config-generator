@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+
+const PASSPHRASE = 'mudlmudl'
+
+const Handlebars = require('../src/handlebars')
+const YAML = require('yamljs')
+const { readFileSync } = require('fs')
+
+// FIXME: Detect and manipulate the MAC address of wlan0. The first byte should be set of 0x02,
+// which means that the address is locally administered. The last four bits should be set to 0x0.
+const mac = '02:3a:35:d0:24:60'
+
+const profiles = YAML.load('profiles.yaml').profiles
+const interfacesContext = require('../src/interfaces')(profiles)
+const { interfaces } = interfacesContext
+
+const context = {
+  interfaces: interfacesContext,
+  tc: require('../src/tc')(profiles)
+}
+
+context.dhcpd = require('../src/dhcpd')(interfaces)
+context.iptables = require('../src/iptables')(interfaces)
+
+context.hostapd = require('../src/hostapd')(mac, PASSPHRASE, profiles)
+
+const program = require('commander')
+
+for (let command in context) {
+  let template
+
+  program.command(command)
+    .action(() => {
+      template = Handlebars.compile(readFileSync(`templates/${command}.hbs`, 'UTF-8'))
+
+      console.log(template(context[command]))
+    })
+}
+
+program.parse(process.argv)

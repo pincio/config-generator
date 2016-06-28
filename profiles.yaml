@@ -1,0 +1,12 @@
+profiles:
+  - name: '4G (UK)'
+    bandwidth: # (Mbit/s)
+      download: 14.7
+      upload: 13.6
+    round_trip_time: 53.1 # (ms)
+
+  - name: '3G (UK)'
+    bandwidth:
+      download: 5.9
+      upload: 1.6
+    round_trip_time: 63.5

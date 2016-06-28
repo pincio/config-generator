@@ -1,0 +1,24 @@
+interface=wlan0
+bssid={{mac}}
+driver=nl80211
+
+# IEEE 802.11g (2.4GHz)
+hw_mode=g
+
+auth_algs=1
+
+ssid=mudl
+wpa=1
+wpa_passphrase={{passphrase}}
+wpa_key_mgmt=WPA-PSK
+rsn_pairwise=CCMP
+
+{{#each basic_service_sets}}
+bss={{bss}}
+ssid={{ssid}}
+wpa=1
+wpa_passphrase={{@root.passphrase}}
+wpa_key_mgmt=WPA-PSK
+rsn_pairwise=CCMP
+
+{{/each}}

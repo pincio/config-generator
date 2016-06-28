@@ -1,0 +1,15 @@
+source-directory /etc/network/interfaces.d
+
+auto lo
+iface lo inet loopback
+
+iface eth0 inet manual
+
+{{#each interfaces}}
+allow-hotplug {{name}}
+iface {{name}} inet static
+	address {{join address '.'}}
+	netmask {{join netmask '.'}}
+{{/each}}
+
+up iptables-restore < /etc/iptables.ipv4.nat

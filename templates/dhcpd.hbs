@@ -1,0 +1,18 @@
+ddns-update-style none;
+
+default-lease-time 600;
+max-lease-time 7200;
+
+authoritative;
+
+# Use this to send dhcp log messages to a different log file (you also
+# have to hack syslog.conf to complete the redirection).
+log-facility local7;
+
+{{#each subnets}}
+subnet {{join address '.'}} netmask {{join netmask '.'}} {
+	range {{join range.start '.'}} {{join range.end '.'}};
+	option broadcast-address {{join broadcast_address '.'}};
+	option routers {{join router_address '.'}};
+}
+{{/each}}
