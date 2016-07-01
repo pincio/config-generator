@@ -2,20 +2,22 @@
   "name": "mudl",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "bin": {
+    "jenny": "./bin/jenny"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/phuedx/mudl.git"
+    "url": "git+https://github.com/pincio/jenny.git"
   },
-  "author": "Sam Smith <me@samsmith.io>",
+  "author": "Sam Smith <yo@samsmith.io>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/phuedx/mudl/issues"
+    "url": "https://github.com/pincio/jenny/issues"
   },
-  "homepage": "https://github.com/phuedx/mudl#readme",
+  "homepage": "https://github.com/pincio/jenny#readme",
   "dependencies": {
     "commander": "^2.9.0",
     "handlebars": "^4.0.5",
