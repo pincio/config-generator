@@ -47,7 +47,10 @@ COMMANDS.forEach(command =>
     .action(() => {
       const profiles = YAML.load(program.profiles).profiles
       const context = createContext(profiles)
-      const template = Handlebars.compile(readFileSync(`templates/${command}.hbs`, 'UTF-8'))
+      const template = Handlebars.compile(readFileSync(
+        resolve(__dirname, '../templates', `${command}.hbs`),
+        'UTF-8'
+      ))
 
       console.log(template(context[command]))
     })
