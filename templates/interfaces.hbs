@@ -10,6 +10,9 @@ allow-hotplug {{name}}
 iface {{name}} inet static
 	address {{join address '.'}}
 	netmask {{join netmask '.'}}
+	{{#has_command}}
+	{{command}}
+	{{/has_command}}
 {{/each}}
 
 up iptables-restore < /etc/iptables.ipv4.nat

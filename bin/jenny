@@ -14,12 +14,13 @@ const YAML = require('yamljs')
 const { readFileSync } = require('fs')
 const { resolve } = require('path')
 
-// FIXME: Detect and manipulate the MAC address of wlan0. The first byte should be set of 0x02,
-// which means that the address is locally administered. The last four bits should be set to 0x0.
+// The first byte, 0x02, means that the address is locally administered. The last four bits should
+// be set to 0x0 so that addresses for the Basic Service Sets can be easily derived by hostapd, e.g.
+// 02:3a:35:d0:24:61, :62, :63, :64 etc.
 const mac = '02:3a:35:d0:24:60'
 
 function createContext(profiles) {
-  const interfacesContext = require('../src/interfaces')(profiles)
+  const interfacesContext = require('../src/interfaces')(mac, profiles)
   const { interfaces } = interfacesContext
 
   let context = {
