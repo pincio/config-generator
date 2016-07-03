@@ -1,7 +1,7 @@
 {
-  "name": "mudl",
+  "name": "jenny",
   "version": "0.1.0",
-  "description": "",
+  "description": "A configuration generator for PiNC.",
   "bin": {
     "jenny": "./bin/jenny"
   },
