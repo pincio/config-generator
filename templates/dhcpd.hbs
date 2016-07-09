@@ -14,5 +14,6 @@ subnet {{join address '.'}} netmask {{join netmask '.'}} {
 	range {{join range.start '.'}} {{join range.end '.'}};
 	option broadcast-address {{join broadcast_address '.'}};
 	option routers {{join router_address '.'}};
+	option domain-name-servers 8.8.8.8, 8.8.4.4;
 }
 {{/each}}
