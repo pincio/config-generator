@@ -16,3 +16,5 @@ iface {{name}} inet static
 {{/each}}
 
 up iptables-restore < /etc/iptables.ipv4.nat
+
+up service isc-dhcp-server restart
