@@ -7,7 +7,7 @@ sudo tc qdisc add dev {{interfaces.ingress}} root handle 1: htb default 0
 {{#each classes}}
 sudo tc class add dev {{@root.interfaces.egress}} parent {{parent}} classid {{id}} htb rate {{bandwidth.upload}}mbit ceil {{bandwidth.upload}}mbit
 sudo tc qdisc add dev {{@root.interfaces.egress}} parent {{id}} netem delay {{round_trip_time}}ms {{round_trip_time_correlation}}ms distribution normal loss 1% 25%
-sudo tc class add dev {{@root.interfaces.ingress}} parent {{parent}} classid {{id}} htb rate {{bandwidth.download}}mbil ceil {{bandwidth.download}}mbit
+sudo tc class add dev {{@root.interfaces.ingress}} parent {{parent}} classid {{id}} htb rate {{bandwidth.download}}mbit ceil {{bandwidth.download}}mbit
 {{/each}}
 
 {{#each filters}}
