@@ -1,7 +1,7 @@
-tc qdisc del dev {{interfaces.egress}} root 2>/dev/null
+tc qdisc del dev {{interfaces.egress}} root 2>/dev/null || true
 tc qdisc add dev {{interfaces.egress}} root handle 1: htb default 0
 
-tc qdisc del dev {{interfaces.ingress}} root 2>/dev/null
+tc qdisc del dev {{interfaces.ingress}} root 2>/dev/null || true
 tc qdisc add dev {{interfaces.ingress}} root handle 1: htb default 0
 
 {{#each classes}}
