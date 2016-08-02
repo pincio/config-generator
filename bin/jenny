@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const PASSPHRASE = 'mudlmudl'
+const PASSPHRASE = 'pincpinc'
 const COMMANDS = [
   'interfaces',
   'tc',
