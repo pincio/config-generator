@@ -1,16 +1,16 @@
-tc qdisc del dev {{interfaces.egress}} root 2>/dev/null || true
-tc qdisc add dev {{interfaces.egress}} root handle 1: htb default 0
+tc qdisc del dev {{egress_interface}} root 2>/dev/null || true
+tc qdisc add dev {{egress_interface}} root handle 1: htb default 0
 
-tc qdisc del dev {{interfaces.ingress}} root 2>/dev/null || true
-tc qdisc add dev {{interfaces.ingress}} root handle 1: htb default 0
-
-{{#each classes}}
-tc class add dev {{@root.interfaces.egress}} parent {{parent}} classid {{id}} htb rate {{bandwidth.upload}}mbit ceil {{bandwidth.upload}}mbit
-tc qdisc add dev {{@root.interfaces.egress}} parent {{id}} netem delay {{round_trip_time}}ms {{round_trip_time_correlation}}ms distribution normal loss 1% 25%
-tc class add dev {{@root.interfaces.ingress}} parent {{parent}} classid {{id}} htb rate {{bandwidth.download}}mbit ceil {{bandwidth.download}}mbit
+{{#each egress_classes}}
+tc class add dev {{@root.egress_interface}} parent {{parent}} classid {{id}} htb rate {{bandwidth.upload}}mbit ceil {{bandwidth.upload}}mbit
+tc qdisc add dev {{@root.egress_interface}} parent {{id}} netem delay {{round_trip_time}}ms {{round_trip_time_correlation}}ms distribution normal loss 1% 25%
 {{/each}}
 
-{{#each filters}}
-tc filter add dev {{@root.interfaces.egress}} protocol ip parent 1: handle {{fwmark}} fw classid {{classID}}
-tc filter add dev {{@root.interfaces.ingress}} protocol ip parent 1: handle {{fwmark}} fw classid {{classID}}
+{{#each egress_filters}}
+tc filter add dev {{@root.egress_interface}} protocol ip parent 1: handle {{fwmark}} fw classid {{classID}}
+{{/each}}
+
+{{#each ingress_qdiscs}}
+tc qdisc del dev {{interface}} root 2>/dev/null || true
+tc qdisc add dev {{interface}} root handle 1: tbf rate {{bandwidth}}mbit latency 50ms burst {{burst}}
 {{/each}}

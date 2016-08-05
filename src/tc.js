@@ -1,5 +1,5 @@
 function createContext(profiles) {
-  const classes = profiles.map((profile, i) => {
+  const egressClasses = profiles.map((profile, i) => {
     const { bandwidth, round_trip_time } = profile
 
     return {
@@ -11,20 +11,32 @@ function createContext(profiles) {
       round_trip_time_correlation: (0.1 * round_trip_time).toFixed(1) // e.g. 5.3
     }
   });
-  const filters = classes.map((klass, i) => {
+  const egressFilters = egressClasses.map((klass, i) => {
     return {
       fwmark: i + 1,
       classID: `${klass.id}`
     }
   });
+  const ingressQdiscs = profiles.map((profile, i) => {
+    const bandwidth = profile.bandwidth.download
+
+    return {
+      interface: `wlan0_${i}`, // e.g. wlan0_0
+      bandwidth,
+
+      // LARTC recommends a burst of 1 kbyte for a 1 mbit/s rate [0]. N.B. that the burst tbf
+      // parameter is specified in bytes.
+      //
+      // [0]: http://lartc.org/howto/lartc.qdisc.classless.html#AEN710
+      burst: bandwidth * 1000 // e.g. 5300
+    }
+  })
 
   return {
-    interfaces: {
-      egress: 'eth0',
-      ingress: 'wlan0'
-    },
-    classes,
-    filters
+    egress_interface: 'eth0',
+    egress_classes: egressClasses,
+    egress_filters: egressFilters,
+    ingress_qdiscs: ingressQdiscs
   }
 }
 
