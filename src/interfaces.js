@@ -22,9 +22,7 @@ function createContext(mac, profiles) {
     command: `pre-up ifconfig ${INTERFACE} hw ether ${mac}`
   })
 
-  return {
-    interfaces
-  }
+  return interfaces
 }
 
 module.exports = createContext

@@ -9,7 +9,7 @@ authoritative;
 # have to hack syslog.conf to complete the redirection).
 log-facility local7;
 
-{{#each subnets}}
+{{#each @root}}
 subnet {{join address '.'}} netmask {{join netmask '.'}} {
 	range {{join range.start '.'}} {{join range.end '.'}};
 	option broadcast-address {{join broadcast_address '.'}};

@@ -1,7 +1,5 @@
 function createContext(interfaces) {
-  return {
-    dhcpd_devices: interfaces.map(interface => interface.name).join(' ')
-  }
+  return interfaces.map(interface => interface.name)
 }
 
 module.exports = createContext

@@ -21,20 +21,16 @@ const { resolve } = require('path')
 const mac = '02:3a:35:d0:24:60'
 
 function createContext(profiles) {
-  const interfacesContext = require('../src/interfaces')(mac, profiles)
-  const { interfaces } = interfacesContext
+  const interfaces = require('../src/interfaces')(mac, profiles)
 
-  let context = {
-    interfaces: interfacesContext,
-    tc: require('../src/tc')(profiles)
+  return {
+    interfaces: interfaces,
+    tc: require('../src/tc')(profiles),
+    dhcpd: require('../src/dhcpd')(interfaces),
+    dhcpd_devices: require('../src/dhcpd_devices')(interfaces),
+    iptables: require('../src/iptables')(interfaces),
+    hostapd: require('../src/hostapd')(mac, PASSPHRASE, profiles)
   }
-
-  context.dhcpd = require('../src/dhcpd')(interfaces)
-  context.dhcpd_devices = require('../src/dhcpd_devices')(interfaces)
-  context.iptables = require('../src/iptables')(interfaces)
-  context.hostapd = require('../src/hostapd')(mac, PASSPHRASE, profiles)
-
-  return context
 }
 
 const program = require('commander')

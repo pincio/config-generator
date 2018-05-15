@@ -39,9 +39,7 @@ function createSubnet(interface) {
 }
 
 function createContext(interfaces) {
-  return {
-    subnets: interfaces.map(createSubnet)
-  }
+  return interfaces.map(createSubnet)
 }
 
 module.exports = createContext

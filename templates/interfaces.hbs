@@ -5,7 +5,7 @@ iface lo inet loopback
 
 iface eth0 inet manual
 
-{{#each interfaces}}
+{{#each @root}}
 allow-hotplug {{name}}
 iface {{name}} inet static
 	address {{join address '.'}}
