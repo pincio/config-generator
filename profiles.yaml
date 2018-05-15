@@ -1,4 +1,8 @@
 profiles:
+
+  # Based on Ofcom's research into the bandwidth and latency of 4G and 3G
+  # networks in the UK in 2015
+  # (see http://stakeholders.ofcom.org.uk/market-data-research/other/telecoms-research/broadband-speeds/mobile-bb-april-15/).
   - name: '4G (UK)'
     bandwidth: # (Mbit/s)
       download: 14.7
