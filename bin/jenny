@@ -41,7 +41,7 @@ const program = require('commander')
 
 program.option(
   '-p, --profiles [path]',
-  'The profiles definition file [/path/to/jenny/profiles.yaml]',
+  'The profiles definition file',
   resolve(__dirname, '../profiles.yaml')
 )
 
