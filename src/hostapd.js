@@ -1,9 +1,7 @@
-const { INTERFACE } = require('./interfaces')
-
-function createContext(mac, passphrase, profiles) {
+function createContext(mac, passphrase, profiles, interface) {
   const basicServiceSets = profiles.map((profile, i) => {
     return {
-      bss: `${INTERFACE}_${i}`,
+      bss: `${interface}_${i}`,
       ssid: `PiNC - ${profile.name}`
     }
   })

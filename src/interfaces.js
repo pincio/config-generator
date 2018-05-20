@@ -1,29 +1,27 @@
-const INTERFACE = 'wlan0'
 const ADDRESS = [192, 168, 60, 1]
 const NETMASK = [255, 255, 255, 0]
 
-function createContext(mac, profiles) {
+function createContext(mac, profiles, interface) {
   let interfaces = profiles.map((_, i) => {
     let address = ADDRESS.slice()
     address[2] += (i + 1) // e.g. 192.168.61.1
 
     return {
-      name: `${INTERFACE}_${i}`, // e.g. wlan0_0
+      name: `${interface}_${i}`, // e.g. wlan0_0
       address,
       netmask: NETMASK
     }
   })
 
   interfaces.unshift({
-    name: INTERFACE,
+    name: interface,
     address: ADDRESS,
     netmask: NETMASK,
     has_command: true,
-    command: `pre-up ifconfig ${INTERFACE} hw ether ${mac}`
+    command: `pre-up ifconfig ${interface} hw ether ${mac}`
   })
 
   return interfaces
 }
 
 module.exports = createContext
-module.exports.INTERFACE = INTERFACE
