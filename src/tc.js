@@ -1,4 +1,4 @@
-function createContext(profiles) {
+function createContext(profiles, interface) {
   const egressClasses = profiles.map((profile, i) => {
     const { bandwidth, round_trip_time } = profile
 
@@ -21,7 +21,7 @@ function createContext(profiles) {
     const bandwidth = profile.bandwidth.download
 
     return {
-      interface: `wlan0_${i}`, // e.g. wlan0_0
+      interface: `${interface}_${i}`, // e.g. wlan0_0
       bandwidth,
 
       // LARTC recommends a burst of 1 kbyte for a 1 mbit/s rate [0]. N.B. that the burst tbf
