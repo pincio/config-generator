@@ -9,7 +9,8 @@ function createContext(mac, passphrase, profiles, interface) {
   return {
     mac,
     passphrase,
-    basic_service_sets: basicServiceSets
+    basic_service_sets: basicServiceSets,
+    interface
   }
 }
 
