@@ -21,6 +21,7 @@ const { resolve } = require('path')
 const mac = '02:3a:35:d0:24:60'
 
 const INTERFACE = 'wlan0'
+const EXTERNAL_INTERFACE = 'eth0'
 
 function createContext(profiles) {
   const interfaces = require('../src/interfaces')(mac, profiles, INTERFACE)
@@ -30,7 +31,7 @@ function createContext(profiles) {
     tc: require('../src/tc')(profiles, INTERFACE),
     dhcpd: require('../src/dhcpd')(interfaces),
     dhcpd_devices: require('../src/dhcpd_devices')(interfaces),
-    iptables: require('../src/iptables')(interfaces),
+    iptables: require('../src/iptables')(interfaces, EXTERNAL_INTERFACE),
     hostapd: require('../src/hostapd')(mac, PASSPHRASE, profiles, INTERFACE)
   }
 }
