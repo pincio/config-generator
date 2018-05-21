@@ -1,4 +1,4 @@
-function createContext(profiles, interface) {
+function createContext(profiles, interface, externalInterface) {
   const egressClasses = profiles.map((profile, i) => {
     const { bandwidth, round_trip_time } = profile
 
@@ -33,7 +33,7 @@ function createContext(profiles, interface) {
   })
 
   return {
-    egress_interface: 'eth0',
+    external_interface: externalInterface,
     egress_classes: egressClasses,
     egress_filters: egressFilters,
     ingress_qdiscs: ingressQdiscs

@@ -28,7 +28,7 @@ function createContext(profiles) {
 
   return {
     interfaces: interfaces,
-    tc: require('../src/tc')(profiles, INTERFACE),
+    tc: require('../src/tc')(profiles, INTERFACE, EXTERNAL_INTERFACE),
     dhcpd: require('../src/dhcpd')(interfaces),
     dhcpd_devices: require('../src/dhcpd_devices')(interfaces),
     iptables: require('../src/iptables')(interfaces, EXTERNAL_INTERFACE),
