@@ -1,4 +1,4 @@
-function createContext(interfaces, interface, externalInterface) {
+function createContext(interfaces, internalInterface, externalInterface) {
   // FIXME: `slice(1)` indicates a binding between this and `createInterfacesContext`.
   const rules = interfaces.slice(1).map((interface, i) => {
     return {
@@ -9,7 +9,7 @@ function createContext(interfaces, interface, externalInterface) {
 
   return {
     rules,
-    interface: interface,
+    internal_interface: internalInterface,
     external_interface: externalInterface
   }
 }

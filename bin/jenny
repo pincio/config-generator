@@ -20,20 +20,20 @@ const { resolve } = require('path')
 // 02:3a:35:d0:24:61, :62, :63, :64 etc.
 const mac = '02:3a:35:d0:24:60'
 
-const INTERFACE = 'wlan0'
+const INTERNAL_INTERFACE = 'wlan0'
 const EXTERNAL_INTERFACE = 'eth0'
 
 function createContext(profiles) {
-  const interfacesContext = require('../src/interfaces')(mac, profiles, INTERFACE, EXTERNAL_INTERFACE)
+  const interfacesContext = require('../src/interfaces')(mac, profiles, INTERNAL_INTERFACE, EXTERNAL_INTERFACE)
   const { interfaces } = interfacesContext
 
   return {
     interfaces: interfacesContext,
-    tc: require('../src/tc')(profiles, INTERFACE, EXTERNAL_INTERFACE),
+    tc: require('../src/tc')(profiles, INTERNAL_INTERFACE, EXTERNAL_INTERFACE),
     dhcpd: require('../src/dhcpd')(interfaces),
     dhcpd_devices: require('../src/dhcpd_devices')(interfaces),
-    iptables: require('../src/iptables')(interfaces, INTERFACE, EXTERNAL_INTERFACE),
-    hostapd: require('../src/hostapd')(mac, PASSPHRASE, profiles, INTERFACE)
+    iptables: require('../src/iptables')(interfaces, INTERNAL_INTERFACE, EXTERNAL_INTERFACE),
+    hostapd: require('../src/hostapd')(mac, PASSPHRASE, profiles, INTERNAL_INTERFACE)
   }
 }
 

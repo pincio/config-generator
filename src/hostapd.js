@@ -1,7 +1,7 @@
-function createContext(mac, passphrase, profiles, interface) {
+function createContext(mac, passphrase, profiles, internalInterface) {
   const basicServiceSets = profiles.map((profile, i) => {
     return {
-      bss: `${interface}_${i}`,
+      bss: `${internalInterface}_${i}`,
       ssid: `PiNC - ${profile.name}`
     }
   })
@@ -10,7 +10,7 @@ function createContext(mac, passphrase, profiles, interface) {
     mac,
     passphrase,
     basic_service_sets: basicServiceSets,
-    interface
+    internal_interface: internalInterface
   }
 }
 
