@@ -24,10 +24,11 @@ const INTERFACE = 'wlan0'
 const EXTERNAL_INTERFACE = 'eth0'
 
 function createContext(profiles) {
-  const interfaces = require('../src/interfaces')(mac, profiles, INTERFACE)
+  const interfacesContext = require('../src/interfaces')(mac, profiles, INTERFACE, EXTERNAL_INTERFACE)
+  const { interfaces } = interfacesContext
 
   return {
-    interfaces: interfaces,
+    interfaces: interfacesContext,
     tc: require('../src/tc')(profiles, INTERFACE, EXTERNAL_INTERFACE),
     dhcpd: require('../src/dhcpd')(interfaces),
     dhcpd_devices: require('../src/dhcpd_devices')(interfaces),

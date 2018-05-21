@@ -3,9 +3,9 @@ source-directory /etc/network/interfaces.d
 auto lo
 iface lo inet loopback
 
-iface eth0 inet manual
+iface {{external_interface}} inet manual
 
-{{#each @root}}
+{{#each interfaces}}
 allow-hotplug {{name}}
 iface {{name}} inet static
 	address {{join address '.'}}
