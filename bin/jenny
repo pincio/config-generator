@@ -20,20 +20,17 @@ const { resolve } = require('path')
 // 02:3a:35:d0:24:61, :62, :63, :64 etc.
 const mac = '02:3a:35:d0:24:60'
 
-const INTERNAL_INTERFACE = 'wlan0'
-const EXTERNAL_INTERFACE = 'eth0'
-
-function createContext(profiles) {
-  const interfacesContext = require('../src/interfaces')(mac, profiles, INTERNAL_INTERFACE, EXTERNAL_INTERFACE)
+function createContext(profiles, internalInterface, externalInterface) {
+  const interfacesContext = require('../src/interfaces')(mac, profiles, internalInterface, externalInterface)
   const { interfaces } = interfacesContext
 
   return {
     interfaces: interfacesContext,
-    tc: require('../src/tc')(profiles, INTERNAL_INTERFACE, EXTERNAL_INTERFACE),
+    tc: require('../src/tc')(profiles, internalInterface, externalInterface),
     dhcpd: require('../src/dhcpd')(interfaces),
     dhcpd_devices: require('../src/dhcpd_devices')(interfaces),
-    iptables: require('../src/iptables')(interfaces, INTERNAL_INTERFACE, EXTERNAL_INTERFACE),
-    hostapd: require('../src/hostapd')(mac, PASSPHRASE, profiles, INTERNAL_INTERFACE)
+    iptables: require('../src/iptables')(interfaces, internalInterface, externalInterface),
+    hostapd: require('../src/hostapd')(mac, PASSPHRASE, profiles, internalInterface)
   }
 }
 
@@ -45,11 +42,23 @@ program.option(
   resolve(__dirname, '../profiles.yaml')
 )
 
+program.option(
+  '-i, --internal [name]',
+  'The name of the wireless interface that\'ll host the wireless networks',
+  'wlan0'
+)
+
+program.option(
+  '-e, --external [name]',
+  'The name of the interface connected to your network.',
+  'eth0'
+)
+
 COMMANDS.forEach(command =>
   program.command(command)
     .action(() => {
       const profiles = YAML.load(program.profiles).profiles
-      const context = createContext(profiles)
+      const context = createContext(profiles, program.internal, program.external)
       const template = Handlebars.compile(readFileSync(
         resolve(__dirname, '../templates', `${command}.hbs`),
         'UTF-8'
